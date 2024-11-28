@@ -1,4 +1,5 @@
 import 'package:counter_cubit/cubits/cubits.dart';
+import 'package:counter_cubit/screen/other.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +10,24 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CounterCubit>(
       create: (context) => CounterCubit(),
-      child: const HomeScreenView(),
+      child: BlocListener<CounterCubit, CounterState>(
+        listener: (context, state) {
+          final int count = state.count;
+          if (count == 3) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                content: Text('count is $count'),
+              ),
+            );
+          } else if (count == -1) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const OtherScreen(),
+            ));
+          }
+        },
+        child: const HomeScreenView(),
+      ),
     );
   }
 }
