@@ -10,7 +10,18 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CounterCubit>(
       create: (context) => CounterCubit(),
-      child: BlocListener<CounterCubit, CounterState>(
+      child: const HomeScreenView(),
+    );
+  }
+}
+
+class HomeScreenView extends StatelessWidget {
+  const HomeScreenView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocConsumer<CounterCubit, CounterState>(
         listener: (context, state) {
           final int count = state.count;
           if (count == 3) {
@@ -26,25 +37,16 @@ class HomeScreen extends StatelessWidget {
             ));
           }
         },
-        child: const HomeScreenView(),
-      ),
-    );
-  }
-}
-
-class HomeScreenView extends StatelessWidget {
-  const HomeScreenView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<CounterCubit, CounterState>(
         builder: (context, state) {
-          return Center(
-            child: Text(
-              state.count.toString(),
-              style: const TextStyle(fontSize: 52),
-            ),
+          return BlocBuilder<CounterCubit, CounterState>(
+            builder: (context, state) {
+              return Center(
+                child: Text(
+                  state.count.toString(),
+                  style: const TextStyle(fontSize: 52),
+                ),
+              );
+            },
           );
         },
       ),
