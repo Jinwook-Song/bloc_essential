@@ -22,6 +22,8 @@ class HomeScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<CounterCubit, CounterState>(
+        listenWhen: (previous, current) => false,
+        buildWhen: (previous, current) => false,
         listener: (context, state) {
           final int count = state.count;
           if (count == 3) {
@@ -38,15 +40,11 @@ class HomeScreenView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return BlocBuilder<CounterCubit, CounterState>(
-            builder: (context, state) {
-              return Center(
-                child: Text(
-                  state.count.toString(),
-                  style: const TextStyle(fontSize: 52),
-                ),
-              );
-            },
+          return Center(
+            child: Text(
+              state.count.toString(),
+              style: const TextStyle(fontSize: 52),
+            ),
           );
         },
       ),
@@ -55,12 +53,12 @@ class HomeScreenView extends StatelessWidget {
         children: [
           const SizedBox(width: 10.0),
           FloatingActionButton(
-            onPressed: BlocProvider.of<CounterCubit>(context).decrement,
+            onPressed: context.read<CounterCubit>().decrement,
             heroTag: 'decrement',
             child: const Icon(Icons.remove),
           ),
           FloatingActionButton(
-            onPressed: BlocProvider.of<CounterCubit>(context).increament,
+            onPressed: context.read<CounterCubit>().increament,
             heroTag: 'increment',
             child: const Icon(Icons.add),
           ),
