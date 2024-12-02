@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
           create: (context) => ColorBloc(),
         ),
         BlocProvider(
-          create: (context) => CountBloc(),
+          create: (context) => CountBloc(context.read<ColorBloc>()),
         ),
       ],
       child: const HomeScreenView(),
@@ -28,22 +28,30 @@ class HomeScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.redAccent,
+      backgroundColor: context.watch<ColorBloc>().state.color,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: () {}, child: const Text("Change Color")),
+            ElevatedButton(
+                onPressed: () {
+                  context.read<ColorBloc>().add(ChangeColorEvent());
+                },
+                child: const Text("Change Color")),
             const SizedBox(height: 40),
-            const Text(
-              "Count",
-              style: TextStyle(
+            Text(
+              "${context.watch<CountBloc>().state.count}",
+              style: const TextStyle(
                   fontSize: 40,
                   color: Colors.white,
                   fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 40),
-            ElevatedButton(onPressed: () {}, child: const Text("Change Count")),
+            ElevatedButton(
+                onPressed: () {
+                  context.read<CountBloc>().add(ChangeCountEvent());
+                },
+                child: const Text("Change Count")),
             const SizedBox(height: 40),
           ],
         ),
