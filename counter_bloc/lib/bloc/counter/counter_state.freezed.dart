@@ -98,7 +98,7 @@ class __$$CounterStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CounterStateImpl implements _CounterState {
-  const _$CounterStateImpl({this.count = 0});
+  const _$CounterStateImpl({this.count = 1});
 
   @override
   @JsonKey()
