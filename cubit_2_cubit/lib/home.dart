@@ -10,11 +10,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ColorCubit>(
+        BlocProvider(
           create: (context) => ColorCubit(),
         ),
-        BlocProvider<CountCubit>(
-          create: (context) => CountCubit(),
+        BlocProvider(
+          create: (context) => CountCubit(
+            colorCubit: context.read<ColorCubit>(),
+          ),
         ),
       ],
       child: const HomeScreenView(),
@@ -46,17 +48,7 @@ class HomeScreenView extends StatelessWidget {
             ),
             const SizedBox(height: 40),
             ElevatedButton(
-                onPressed: () {
-                  final Color color = context.read<ColorCubit>().state.color;
-                  final int value = switch (color) {
-                    Colors.red => 1,
-                    Colors.green => 10,
-                    Colors.blue => 100,
-                    Colors.black => -100,
-                    Color() => throw UnimplementedError(),
-                  };
-                  context.read<CountCubit>().changeCount(value);
-                },
+                onPressed: context.read<CountCubit>().changeCount,
                 child: const Text("Change Count")),
             const SizedBox(height: 40),
           ],
