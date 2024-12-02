@@ -1,4 +1,6 @@
 import 'package:counter_bloc/bloc/counter/counter_bloc.dart';
+import 'package:counter_bloc/bloc/counter/counter_state.dart';
+import 'package:counter_bloc/screen/other.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +11,24 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CounterBloc>(
       create: (context) => CounterBloc(),
-      child: const HomeScreenView(),
+      child: BlocListener<CounterBloc, CounterState>(
+        listener: (context, state) {
+          final int count = state.count;
+          if (count == 3) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                content: Text('count is $count'),
+              ),
+            );
+          } else if (count == -1) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const OtherScreen(),
+            ));
+          }
+        },
+        child: const HomeScreenView(),
+      ),
     );
   }
 }
@@ -40,8 +59,7 @@ class HomeScreenView extends StatelessWidget {
           ),
           FloatingActionButton(
             onPressed: () {
-              BlocProvider.of<CounterBloc>(context)
-                  .add(IncreamentCounterEvent());
+              context.read<CounterBloc>().add(IncreamentCounterEvent());
             },
             heroTag: 'increment',
             child: const Icon(Icons.add),
