@@ -8,18 +8,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CountCubit(),
-      child: const HomeScreenView(),
-    );
-  }
-}
-
-class HomeScreenView extends StatelessWidget {
-  const HomeScreenView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
