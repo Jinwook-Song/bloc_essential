@@ -14,9 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+ThemeState _$ThemeStateFromJson(Map<String, dynamic> json) {
+  return _ThemeState.fromJson(json);
+}
+
 /// @nodoc
 mixin _$ThemeState {
   AppTheme get appTheme => throw _privateConstructorUsedError;
+
+  /// Serializes this ThemeState to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ThemeState
   /// with the given fields replaced by the non-null parameter values.
@@ -96,9 +103,12 @@ class __$$ThemeStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$ThemeStateImpl implements _ThemeState {
   const _$ThemeStateImpl({this.appTheme = AppTheme.light});
+
+  factory _$ThemeStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ThemeStateImplFromJson(json);
 
   @override
   @JsonKey()
@@ -118,6 +128,7 @@ class _$ThemeStateImpl implements _ThemeState {
                 other.appTheme == appTheme));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, appTheme);
 
@@ -128,10 +139,20 @@ class _$ThemeStateImpl implements _ThemeState {
   @pragma('vm:prefer-inline')
   _$$ThemeStateImplCopyWith<_$ThemeStateImpl> get copyWith =>
       __$$ThemeStateImplCopyWithImpl<_$ThemeStateImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ThemeStateImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _ThemeState implements ThemeState {
   const factory _ThemeState({final AppTheme appTheme}) = _$ThemeStateImpl;
+
+  factory _ThemeState.fromJson(Map<String, dynamic> json) =
+      _$ThemeStateImpl.fromJson;
 
   @override
   AppTheme get appTheme;

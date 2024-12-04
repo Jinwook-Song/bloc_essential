@@ -1,11 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloc_hydrated/bloc/theme/theme_state.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'theme_event.dart';
 
-class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
+class ThemeBloc extends Bloc<ThemeEvent, ThemeState> with HydratedMixin {
   ThemeBloc() : super(const ThemeState()) {
+    hydrate();
+
     on<ToggleThemeEvent>((event, emit) {
       final AppTheme currentTheme = state.appTheme;
       switch (currentTheme) {
@@ -15,5 +17,15 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
           emit(state.copyWith(appTheme: AppTheme.light));
       }
     });
+  }
+
+  @override
+  ThemeState? fromJson(Map<String, dynamic> json) {
+    return ThemeState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(ThemeState state) {
+    return state.toJson();
   }
 }

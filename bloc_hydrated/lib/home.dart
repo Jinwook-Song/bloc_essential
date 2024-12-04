@@ -2,6 +2,7 @@ import 'package:bloc_hydrated/bloc/count/count.dart';
 import 'package:bloc_hydrated/bloc/theme/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -49,7 +50,7 @@ class HomeScreenView extends StatelessWidget {
           FloatingActionButton(
             heroTag: 'clear',
             onPressed: () {
-              // TODO
+              HydratedBloc.storage.clear();
             },
             child: const Icon(Icons.delete_forever_rounded),
           ),

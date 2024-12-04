@@ -14,9 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+CountState _$CountStateFromJson(Map<String, dynamic> json) {
+  return _CountState.fromJson(json);
+}
+
 /// @nodoc
 mixin _$CountState {
   dynamic get count => throw _privateConstructorUsedError;
+
+  /// Serializes this CountState to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of CountState
   /// with the given fields replaced by the non-null parameter values.
@@ -93,9 +100,12 @@ class __$$CountStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CountStateImpl implements _CountState {
   const _$CountStateImpl({this.count = 0});
+
+  factory _$CountStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CountStateImplFromJson(json);
 
   @override
   @JsonKey()
@@ -114,6 +124,7 @@ class _$CountStateImpl implements _CountState {
             const DeepCollectionEquality().equals(other.count, count));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(count));
@@ -125,10 +136,20 @@ class _$CountStateImpl implements _CountState {
   @pragma('vm:prefer-inline')
   _$$CountStateImplCopyWith<_$CountStateImpl> get copyWith =>
       __$$CountStateImplCopyWithImpl<_$CountStateImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CountStateImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _CountState implements CountState {
   const factory _CountState({final dynamic count}) = _$CountStateImpl;
+
+  factory _CountState.fromJson(Map<String, dynamic> json) =
+      _$CountStateImpl.fromJson;
 
   @override
   dynamic get count;
