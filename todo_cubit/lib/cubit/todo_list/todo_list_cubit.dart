@@ -10,7 +10,7 @@ abstract interface class ITodoListCubit {
   void editTodo(String id, String desc);
 
   /// todo status 변경
-  void toggleTodo(String id, bool completed);
+  void toggleTodo(String id);
 
   /// todo 제거
   void deleteTodo(String id);
@@ -31,14 +31,16 @@ class TodoListCubit extends Cubit<TodoListState> implements ITodoListCubit {
     final updatedTodoList = state.todoList
         .map((todo) => todo.id == id ? todo.copyWith(desc: desc) : todo)
         .toList();
+
+    print(updatedTodoList);
     emit(state.copyWith(todoList: updatedTodoList));
   }
 
   @override
-  toggleTodo(String id, bool completed) {
+  toggleTodo(String id) {
     final updatedTodoList = state.todoList
         .map((todo) =>
-            todo.id == id ? todo.copyWith(completed: completed) : todo)
+            todo.id == id ? todo.copyWith(completed: !todo.completed) : todo)
         .toList();
     emit(state.copyWith(todoList: updatedTodoList));
   }
