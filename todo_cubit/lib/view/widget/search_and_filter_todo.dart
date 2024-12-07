@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_cubit/cubit/cubit.dart';
 import 'package:todo_cubit/model/model.dart';
-import 'package:todo_cubit/util/extension.dart';
+import 'package:todo_cubit/util/util.dart';
 
 class SearchAndFilterTodo extends StatefulWidget {
   const SearchAndFilterTodo({super.key});
@@ -12,6 +12,14 @@ class SearchAndFilterTodo extends StatefulWidget {
 }
 
 class _SearchAndFilterTodoState extends State<SearchAndFilterTodo> {
+  final Debounce _debounce = Debounce(ms: 1000);
+
+  @override
+  void dispose() {
+    _debounce.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +31,9 @@ class _SearchAndFilterTodoState extends State<SearchAndFilterTodo> {
               filled: true,
               prefix: Icon(Icons.search)),
           onChanged: (String term) {
-            context.read<TodoSearchCubit>().setSearchTerm(term);
+            _debounce.run(() {
+              context.read<TodoSearchCubit>().setSearchTerm(term);
+            });
           },
         ),
         const SizedBox(height: 10),

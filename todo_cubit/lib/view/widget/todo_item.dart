@@ -42,7 +42,7 @@ class _TodoItemState extends State<TodoItem> {
                   ),
                   actions: [
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: Navigator.of(context).pop,
                       child: const Text('CANCEL'),
                     ),
                     TextButton(
