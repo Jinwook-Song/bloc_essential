@@ -12,14 +12,6 @@ class SearchAndFilterTodo extends StatefulWidget {
 }
 
 class _SearchAndFilterTodoState extends State<SearchAndFilterTodo> {
-  final Debounce _debounce = Debounce(ms: 1000);
-
-  @override
-  void dispose() {
-    _debounce.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,11 +23,9 @@ class _SearchAndFilterTodoState extends State<SearchAndFilterTodo> {
               filled: true,
               prefix: Icon(Icons.search)),
           onChanged: (String term) {
-            _debounce.run(() {
-              context
-                  .read<TodoSearchBloc>()
-                  .add(SetSearchTermEvent(searchTerm: term));
-            });
+            context
+                .read<TodoSearchBloc>()
+                .add(SetSearchTermEvent(searchTerm: term));
           },
         ),
         const SizedBox(height: 10),
