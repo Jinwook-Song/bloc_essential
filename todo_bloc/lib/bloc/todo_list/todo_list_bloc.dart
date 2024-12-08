@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:todo_bloc/cubit/todo_list/todo_list.dart';
+import 'package:todo_bloc/bloc/todo_list/todo_list.dart';
 import 'package:todo_bloc/model/model.dart';
 
 part 'todo_list_event.dart';
 
 class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
-  TodoListBloc() : super(TodoListState()) {
+  TodoListBloc() : super(TodoListState.init()) {
     on<AddTodoEvent>(_addTodo);
     on<EditTodoEvent>(_editTodo);
     on<ToggleTodoEvent>(_toggleTodo);

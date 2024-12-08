@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_bloc/cubit/cubit.dart';
+import 'package:todo_bloc/bloc/bloc.dart';
 import 'package:todo_bloc/model/model.dart';
 import 'package:todo_bloc/view/widget/todo_item.dart';
 
@@ -10,7 +10,7 @@ class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Todo> todos =
-        context.watch<FilteredTodoListCubit>().state.filteredTodoList;
+        context.watch<FilteredTodoListBloc>().state.filteredTodoList;
 
     return ListView.separated(
       shrinkWrap: true,
@@ -25,7 +25,7 @@ class TodoList extends StatelessWidget {
         return Dismissible(
             key: ValueKey(todo.id),
             onDismissed: (_) =>
-                context.read<TodoListCubit>().deleteTodo(todo.id),
+                context.read<TodoListBloc>().add(DeleteTodoEvent(id: todo.id)),
             confirmDismiss: (_) => _confirmDismissDialog(context),
             background: const DissmissBackground(left: true),
             secondaryBackground: const DissmissBackground(left: false),

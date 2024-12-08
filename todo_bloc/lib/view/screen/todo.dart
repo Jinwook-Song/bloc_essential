@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_bloc/cubit/cubit.dart';
+import 'package:todo_bloc/bloc/bloc.dart';
 import 'package:todo_bloc/view/widget/create_todo.dart';
 import 'package:todo_bloc/view/widget/search_and_filter_todo.dart';
 import 'package:todo_bloc/view/widget/todo_header.dart';
@@ -13,22 +13,22 @@ class TodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<TodoFilterCubit>(create: (context) => TodoFilterCubit()),
-        BlocProvider<TodoSearchCubit>(create: (context) => TodoSearchCubit()),
-        BlocProvider<TodoListCubit>(create: (context) => TodoListCubit()),
-        BlocProvider<ActiveTodoCountCubit>(
-          create: (context) => ActiveTodoCountCubit(
+        BlocProvider<TodoFilterBloc>(create: (context) => TodoFilterBloc()),
+        BlocProvider<TodoSearchBloc>(create: (context) => TodoSearchBloc()),
+        BlocProvider<TodoListBloc>(create: (context) => TodoListBloc()),
+        BlocProvider<ActiveTodoCountBloc>(
+          create: (context) => ActiveTodoCountBloc(
             initialActiveTodoCount:
-                context.read<TodoListCubit>().state.todoList.length,
-            todoListCubit: BlocProvider.of<TodoListCubit>(context),
+                context.read<TodoListBloc>().state.todoList.length,
+            todoListBloc: BlocProvider.of<TodoListBloc>(context),
           ),
         ),
         BlocProvider(
-          create: (context) => FilteredTodoListCubit(
-            initialTodoList: context.read<TodoListCubit>().state.todoList,
-            todoFilterCubit: BlocProvider.of<TodoFilterCubit>(context),
-            todoSearchCubit: BlocProvider.of<TodoSearchCubit>(context),
-            todoListCubit: BlocProvider.of<TodoListCubit>(context),
+          create: (context) => FilteredTodoListBloc(
+            initialTodoList: context.read<TodoListBloc>().state.todoList,
+            todoFilterBloc: BlocProvider.of<TodoFilterBloc>(context),
+            todoSearchBloc: BlocProvider.of<TodoSearchBloc>(context),
+            todoListBloc: BlocProvider.of<TodoListBloc>(context),
           ),
         )
       ],

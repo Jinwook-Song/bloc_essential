@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:todo_bloc/cubit/todo_search/todo_search.dart';
+import 'package:todo_bloc/bloc/todo_search/todo_search.dart';
 
 part 'todo_search_event.dart';
 

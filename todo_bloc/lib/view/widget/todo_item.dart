@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_bloc/cubit/cubit.dart';
+import 'package:todo_bloc/bloc/todo_list/todo_list_bloc.dart';
 import 'package:todo_bloc/model/model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,9 +53,8 @@ class _TodoItemState extends State<TodoItem> {
                             error = true;
                             return;
                           }
-                          context
-                              .read<TodoListCubit>()
-                              .editTodo(widget.todo.id, updateDesc);
+                          context.read<TodoListBloc>().add(EditTodoEvent(
+                              id: widget.todo.id, desc: updateDesc));
                           Navigator.of(context).pop();
                         });
                       },
@@ -71,7 +70,7 @@ class _TodoItemState extends State<TodoItem> {
       leading: Checkbox(
         value: widget.todo.completed,
         onChanged: (_) {
-          context.read<TodoListCubit>().toggleTodo(widget.todo.id);
+          context.read<TodoListBloc>().add(ToggleTodoEvent(id: widget.todo.id));
         },
       ),
       title: Text(widget.todo.desc),

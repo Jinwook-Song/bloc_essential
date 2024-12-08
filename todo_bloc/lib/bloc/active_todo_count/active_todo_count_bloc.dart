@@ -15,7 +15,7 @@ class ActiveTodoCountBloc
   ActiveTodoCountBloc({
     required this.initialActiveTodoCount,
     required this.todoListBloc,
-  }) : super(ActiveTodoCountState()) {
+  }) : super(ActiveTodoCountState(count: initialActiveTodoCount)) {
     todoListSubscription = todoListBloc.stream.listen((todoListState) {
       final int activeTodoCount = todoListState.todoList
           .where((Todo todo) => !todo.completed)

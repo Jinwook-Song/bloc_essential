@@ -22,13 +22,19 @@ class FilteredTodoListBloc
     required this.todoFilterBloc,
     required this.todoSearchBloc,
     required this.todoListBloc,
-  }) : super(FilteredTodoListState()) {
+  }) : super(FilteredTodoListState(filteredTodoList: initialTodoList)) {
     filterSubscription =
         todoFilterBloc.stream.listen((_) => _setFilteredTodos());
     searchSubscription =
         todoSearchBloc.stream.listen((_) => _setFilteredTodos());
     todoListSubscription =
         todoListBloc.stream.listen((_) => _setFilteredTodos());
+
+    on<CalcFilteredTodoListEvent>(
+      (event, emit) {
+        emit(state.copyWith(filteredTodoList: event.filteredTodoList));
+      },
+    );
   }
 
   void _setFilteredTodos() {
