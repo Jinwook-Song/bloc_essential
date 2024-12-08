@@ -11,7 +11,7 @@ _$DirectGeocodingImpl _$$DirectGeocodingImplFromJson(
     _$DirectGeocodingImpl(
       name: json['name'] as String,
       lat: (json['lat'] as num).toDouble(),
-      lng: (json['lng'] as num).toDouble(),
+      lon: (json['lon'] as num).toDouble(),
       country:
           (json['country'] as List<dynamic>).map((e) => e as String).toList(),
     );
@@ -21,6 +21,6 @@ Map<String, dynamic> _$$DirectGeocodingImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'lat': instance.lat,
-      'lng': instance.lng,
+      'lon': instance.lon,
       'country': instance.country,
     };

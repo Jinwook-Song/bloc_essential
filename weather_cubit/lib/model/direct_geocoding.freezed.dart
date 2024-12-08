@@ -22,7 +22,7 @@ DirectGeocoding _$DirectGeocodingFromJson(Map<String, dynamic> json) {
 mixin _$DirectGeocoding {
   String get name => throw _privateConstructorUsedError;
   double get lat => throw _privateConstructorUsedError;
-  double get lng => throw _privateConstructorUsedError;
+  double get lon => throw _privateConstructorUsedError;
   List<String> get country => throw _privateConstructorUsedError;
 
   /// Serializes this DirectGeocoding to a JSON map.
@@ -41,7 +41,7 @@ abstract class $DirectGeocodingCopyWith<$Res> {
           DirectGeocoding value, $Res Function(DirectGeocoding) then) =
       _$DirectGeocodingCopyWithImpl<$Res, DirectGeocoding>;
   @useResult
-  $Res call({String name, double lat, double lng, List<String> country});
+  $Res call({String name, double lat, double lon, List<String> country});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$DirectGeocodingCopyWithImpl<$Res, $Val extends DirectGeocoding>
   $Res call({
     Object? name = null,
     Object? lat = null,
-    Object? lng = null,
+    Object? lon = null,
     Object? country = null,
   }) {
     return _then(_value.copyWith(
@@ -73,9 +73,9 @@ class _$DirectGeocodingCopyWithImpl<$Res, $Val extends DirectGeocoding>
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
               as double,
-      lng: null == lng
-          ? _value.lng
-          : lng // ignore: cast_nullable_to_non_nullable
+      lon: null == lon
+          ? _value.lon
+          : lon // ignore: cast_nullable_to_non_nullable
               as double,
       country: null == country
           ? _value.country
@@ -93,7 +93,7 @@ abstract class _$$DirectGeocodingImplCopyWith<$Res>
       __$$DirectGeocodingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, double lat, double lng, List<String> country});
+  $Res call({String name, double lat, double lon, List<String> country});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$DirectGeocodingImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? lat = null,
-    Object? lng = null,
+    Object? lon = null,
     Object? country = null,
   }) {
     return _then(_$DirectGeocodingImpl(
@@ -123,9 +123,9 @@ class __$$DirectGeocodingImplCopyWithImpl<$Res>
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
               as double,
-      lng: null == lng
-          ? _value.lng
-          : lng // ignore: cast_nullable_to_non_nullable
+      lon: null == lon
+          ? _value.lon
+          : lon // ignore: cast_nullable_to_non_nullable
               as double,
       country: null == country
           ? _value._country
@@ -141,7 +141,7 @@ class _$DirectGeocodingImpl implements _DirectGeocoding {
   const _$DirectGeocodingImpl(
       {required this.name,
       required this.lat,
-      required this.lng,
+      required this.lon,
       required final List<String> country})
       : _country = country;
 
@@ -153,7 +153,7 @@ class _$DirectGeocodingImpl implements _DirectGeocoding {
   @override
   final double lat;
   @override
-  final double lng;
+  final double lon;
   final List<String> _country;
   @override
   List<String> get country {
@@ -164,7 +164,7 @@ class _$DirectGeocodingImpl implements _DirectGeocoding {
 
   @override
   String toString() {
-    return 'DirectGeocoding(name: $name, lat: $lat, lng: $lng, country: $country)';
+    return 'DirectGeocoding(name: $name, lat: $lat, lon: $lon, country: $country)';
   }
 
   @override
@@ -174,13 +174,13 @@ class _$DirectGeocodingImpl implements _DirectGeocoding {
             other is _$DirectGeocodingImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.lat, lat) || other.lat == lat) &&
-            (identical(other.lng, lng) || other.lng == lng) &&
+            (identical(other.lon, lon) || other.lon == lon) &&
             const DeepCollectionEquality().equals(other._country, _country));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, lat, lng,
+  int get hashCode => Object.hash(runtimeType, name, lat, lon,
       const DeepCollectionEquality().hash(_country));
 
   /// Create a copy of DirectGeocoding
@@ -204,7 +204,7 @@ abstract class _DirectGeocoding implements DirectGeocoding {
   const factory _DirectGeocoding(
       {required final String name,
       required final double lat,
-      required final double lng,
+      required final double lon,
       required final List<String> country}) = _$DirectGeocodingImpl;
 
   factory _DirectGeocoding.fromJson(Map<String, dynamic> json) =
@@ -215,7 +215,7 @@ abstract class _DirectGeocoding implements DirectGeocoding {
   @override
   double get lat;
   @override
-  double get lng;
+  double get lon;
   @override
   List<String> get country;
 

@@ -8,7 +8,7 @@ class DirectGeocoding with _$DirectGeocoding {
   const factory DirectGeocoding({
     required String name,
     required double lat,
-    required double lng,
+    required double lon,
     required List<String> country,
   }) = _DirectGeocoding;
 
