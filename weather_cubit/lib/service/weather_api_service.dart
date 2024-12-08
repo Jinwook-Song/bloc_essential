@@ -17,9 +17,9 @@ abstract interface class WeatherApiService {
 }
 
 class WeatherApiServiceImpl implements WeatherApiService {
-  final http.Client httpClient;
+  final http.Client _httpClient;
 
-  WeatherApiServiceImpl(this.httpClient);
+  WeatherApiServiceImpl(this._httpClient);
 
   @override
   Future<DirectGeocoding> getDirectGeocoding(String city) async {
@@ -34,7 +34,7 @@ class WeatherApiServiceImpl implements WeatherApiService {
         });
 
     try {
-      final http.Response response = await httpClient.get(uri);
+      final http.Response response = await _httpClient.get(uri);
       if (response.statusCode != 200) throw httpErrorHandler(response);
 
       final json = jsonDecode(response.body);
@@ -65,7 +65,7 @@ class WeatherApiServiceImpl implements WeatherApiService {
         });
 
     try {
-      final http.Response response = await httpClient.get(uri);
+      final http.Response response = await _httpClient.get(uri);
       if (response.statusCode != 200) throw httpErrorHandler(response);
       final json = jsonDecode(response.body);
       json['updated_at'] = DateTime.now().millisecondsSinceEpoch;

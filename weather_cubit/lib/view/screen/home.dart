@@ -1,37 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_cubit/cubit/cubit.dart';
+import 'package:weather_cubit/model/model.dart';
 import 'package:weather_cubit/repository/weather.dart';
 import 'package:weather_cubit/service/weather_api_service.dart';
+import 'package:http/http.dart' as http;
+import 'package:weather_cubit/view/view.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  Widget build(BuildContext context) {
+    return RepositoryProvider<WeatherApiService>(
+      create: (context) => WeatherApiServiceImpl(http.Client()),
+      child: RepositoryProvider<WeatherRepository>(
+        create: (context) => WeatherRepositoryImpl(
+          context.read<WeatherApiService>(),
+        ),
+        child: BlocProvider(
+          create: (context) => WeatherCubit(
+            context.read<WeatherRepository>(),
+          ),
+          child: const HomeScreenView(),
+        ),
+      ),
+    );
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final http.Client _httpClient = http.Client();
-  late final WeatherApiService _weatherApiService =
-      WeatherApiServiceImpl(_httpClient);
-  late final WeatherRepository _weatherRepository =
-      WeatherRepositoryImpl(_weatherApiService);
-  @override
-  void initState() {
-    super.initState();
-    _getWeather();
-  }
+class HomeScreenView extends StatefulWidget {
+  const HomeScreenView({super.key});
 
-  Future<void> _getWeather() async {
-    _weatherRepository.getWeather('London').then(print);
-  }
+  @override
+  State<HomeScreenView> createState() => _HomeScreenViewState();
+}
+
+class _HomeScreenViewState extends State<HomeScreenView> {
+  String? _city;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Image.asset('assets/images/loading.gif'),
+      appBar: AppBar(
+        title: Text('Weather'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              _city = await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchScreen(),
+                ),
+              );
+
+              if (_city == null) return;
+              context.read<WeatherCubit>().getWeather(_city!);
+            },
+            icon: Icon(Icons.search),
+          )
+        ],
+      ),
+      body: BlocBuilder<WeatherCubit, WeatherState>(
+        builder: (context, state) {
+          final WeatherStatus status = state.status;
+          final Weather weather = state.weather;
+          final CustomError error = state.error;
+
+          switch (status) {
+            case WeatherStatus.initial:
+            case WeatherStatus.loading:
+              return Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            case WeatherStatus.loaded:
+              return Center(
+                child: Text(weather.toString()),
+              );
+            case WeatherStatus.error:
+              return Center(
+                child: Text('Error: ${error.message}'),
+              );
+          }
+        },
       ),
     );
   }

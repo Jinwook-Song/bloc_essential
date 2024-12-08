@@ -7,16 +7,17 @@ abstract interface class WeatherRepository {
 }
 
 class WeatherRepositoryImpl implements WeatherRepository {
-  final WeatherApiService weatherApiService;
+  final WeatherApiService _weatherApiService;
 
-  WeatherRepositoryImpl(this.weatherApiService);
+  WeatherRepositoryImpl(this._weatherApiService);
 
   @override
   Future<Weather> getWeather(String city) async {
     try {
-      return weatherApiService
-          .getDirectGeocoding(city)
-          .then(weatherApiService.getWeather);
+      final DirectGeocoding geocoding =
+          await _weatherApiService.getDirectGeocoding(city);
+      final Weather weather = await _weatherApiService.getWeather(geocoding);
+      return weather;
     } on WeatherException catch (e) {
       throw CustomError(message: e.message);
     } catch (e) {
