@@ -8,7 +8,7 @@ part of 'custom_error.dart';
 
 _$CustomErrorImpl _$$CustomErrorImplFromJson(Map<String, dynamic> json) =>
     _$CustomErrorImpl(
-      message: json['message'] ?? '',
+      message: json['message'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$CustomErrorImplToJson(_$CustomErrorImpl instance) =>

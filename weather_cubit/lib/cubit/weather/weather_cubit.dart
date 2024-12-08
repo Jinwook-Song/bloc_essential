@@ -20,9 +20,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     } on CustomError catch (e) {
       emit(state.copyWith(
         status: WeatherStatus.error,
-        error: CustomError(
-          message: e,
-        ),
+        error: e,
       ));
     }
   }

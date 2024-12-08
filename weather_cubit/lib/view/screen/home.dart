@@ -60,7 +60,20 @@ class _HomeScreenViewState extends State<HomeScreenView> {
           )
         ],
       ),
-      body: BlocBuilder<WeatherCubit, WeatherState>(
+      body: BlocConsumer<WeatherCubit, WeatherState>(
+        listener: (context, state) {
+          if (state.status == WeatherStatus.error) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: Text(state.error.message),
+                );
+              },
+            );
+          }
+        },
         builder: (context, state) {
           final WeatherStatus status = state.status;
           final Weather weather = state.weather;
@@ -68,6 +81,12 @@ class _HomeScreenViewState extends State<HomeScreenView> {
 
           switch (status) {
             case WeatherStatus.initial:
+              return Center(
+                child: Text(
+                  'Select a City',
+                  style: TextStyle(fontSize: 20),
+                ),
+              );
             case WeatherStatus.loading:
               return Center(
                 child: CircularProgressIndicator.adaptive(),
@@ -77,6 +96,13 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                 child: Text(weather.toString()),
               );
             case WeatherStatus.error:
+              if (weather.name == '')
+                return Center(
+                    child: Text(
+                  'Select a City',
+                  style: TextStyle(fontSize: 20),
+                ));
+
               return Center(
                 child: Text('Error: ${error.message}'),
               );

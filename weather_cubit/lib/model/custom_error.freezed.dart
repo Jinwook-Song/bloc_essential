@@ -20,7 +20,7 @@ CustomError _$CustomErrorFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CustomError {
-  dynamic get message => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
 
   /// Serializes this CustomError to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $CustomErrorCopyWith<$Res> {
           CustomError value, $Res Function(CustomError) then) =
       _$CustomErrorCopyWithImpl<$Res, CustomError>;
   @useResult
-  $Res call({dynamic message});
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -56,13 +56,13 @@ class _$CustomErrorCopyWithImpl<$Res, $Val extends CustomError>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_value.copyWith(
-      message: freezed == message
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$CustomErrorImplCopyWith<$Res>
       __$$CustomErrorImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({dynamic message});
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -91,10 +91,13 @@ class __$$CustomErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$CustomErrorImpl(
-      message: freezed == message ? _value.message! : message,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -109,7 +112,7 @@ class _$CustomErrorImpl implements _CustomError {
 
   @override
   @JsonKey()
-  final dynamic message;
+  final String message;
 
   @override
   String toString() {
@@ -121,13 +124,12 @@ class _$CustomErrorImpl implements _CustomError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CustomErrorImpl &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   /// Create a copy of CustomError
   /// with the given fields replaced by the non-null parameter values.
@@ -146,13 +148,13 @@ class _$CustomErrorImpl implements _CustomError {
 }
 
 abstract class _CustomError implements CustomError {
-  const factory _CustomError({final dynamic message}) = _$CustomErrorImpl;
+  const factory _CustomError({final String message}) = _$CustomErrorImpl;
 
   factory _CustomError.fromJson(Map<String, dynamic> json) =
       _$CustomErrorImpl.fromJson;
 
   @override
-  dynamic get message;
+  String get message;
 
   /// Create a copy of CustomError
   /// with the given fields replaced by the non-null parameter values.
