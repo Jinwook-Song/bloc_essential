@@ -20,15 +20,11 @@ class TodoScreen extends StatelessWidget {
           create: (context) => ActiveTodoCountCubit(
             initialActiveTodoCount:
                 context.read<TodoListCubit>().state.todoList.length,
-            todoListCubit: BlocProvider.of<TodoListCubit>(context),
           ),
         ),
         BlocProvider(
           create: (context) => FilteredTodoListCubit(
             initialTodoList: context.read<TodoListCubit>().state.todoList,
-            todoFilterCubit: BlocProvider.of<TodoFilterCubit>(context),
-            todoSearchCubit: BlocProvider.of<TodoSearchCubit>(context),
-            todoListCubit: BlocProvider.of<TodoListCubit>(context),
           ),
         )
       ],

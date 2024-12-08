@@ -12,7 +12,7 @@ class SearchAndFilterTodo extends StatefulWidget {
 }
 
 class _SearchAndFilterTodoState extends State<SearchAndFilterTodo> {
-  final Debounce _debounce = Debounce(ms: 1000);
+  final Debounce _debounce = Debounce(ms: 300);
 
   @override
   void dispose() {

@@ -12,25 +12,56 @@ class TodoList extends StatelessWidget {
     final List<Todo> todos =
         context.watch<FilteredTodoListCubit>().state.filteredTodoList;
 
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: todos.length,
-      separatorBuilder: (context, index) => const Divider(
-        color: Colors.grey,
-        height: 0,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<TodoListCubit, TodoListState>(
+          listener: (context, state) {
+            context.read<FilteredTodoListCubit>().setFilteredTodos(
+                  todoFilter: context.read<TodoFilterCubit>().state.filter,
+                  todoList: state.todoList,
+                  searchTerm: context.read<TodoSearchCubit>().state.term,
+                );
+          },
+        ),
+        BlocListener<TodoFilterCubit, TodoFilterState>(
+          listener: (context, state) {
+            context.read<FilteredTodoListCubit>().setFilteredTodos(
+                  todoFilter: state.filter,
+                  todoList: context.read<TodoListCubit>().state.todoList,
+                  searchTerm: context.read<TodoSearchCubit>().state.term,
+                );
+          },
+        ),
+        BlocListener<TodoSearchCubit, TodoSearchState>(
+          listener: (context, state) {
+            context.read<FilteredTodoListCubit>().setFilteredTodos(
+                  todoFilter: context.read<TodoFilterCubit>().state.filter,
+                  todoList: context.read<TodoListCubit>().state.todoList,
+                  searchTerm: state.term,
+                );
+          },
+        ),
+      ],
+      child: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: todos.length,
+        separatorBuilder: (context, index) => const Divider(
+          color: Colors.grey,
+          height: 0,
+        ),
+        itemBuilder: (context, index) {
+          final Todo todo = todos[index];
+          return Dismissible(
+              key: ValueKey(todo.id),
+              onDismissed: (_) =>
+                  context.read<TodoListCubit>().deleteTodo(todo.id),
+              confirmDismiss: (_) => _confirmDismissDialog(context),
+              background: const DissmissBackground(left: true),
+              secondaryBackground: const DissmissBackground(left: false),
+              child: TodoItem(todo));
+        },
       ),
-      itemBuilder: (context, index) {
-        final Todo todo = todos[index];
-        return Dismissible(
-            key: ValueKey(todo.id),
-            onDismissed: (_) =>
-                context.read<TodoListCubit>().deleteTodo(todo.id),
-            confirmDismiss: (_) => _confirmDismissDialog(context),
-            background: const DissmissBackground(left: true),
-            secondaryBackground: const DissmissBackground(left: false),
-            child: TodoItem(todo));
-      },
     );
   }
 
