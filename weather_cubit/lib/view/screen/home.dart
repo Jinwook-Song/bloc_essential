@@ -63,15 +63,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
       body: BlocConsumer<WeatherCubit, WeatherState>(
         listener: (context, state) {
           if (state.status == WeatherStatus.error) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text('Error'),
-                  content: Text(state.error.message),
-                );
-              },
-            );
+            errorDialog(context, state.error.message);
           }
         },
         builder: (context, state) {
