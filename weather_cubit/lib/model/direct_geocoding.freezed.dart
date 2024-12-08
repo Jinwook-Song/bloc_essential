@@ -23,7 +23,7 @@ mixin _$DirectGeocoding {
   String get name => throw _privateConstructorUsedError;
   double get lat => throw _privateConstructorUsedError;
   double get lon => throw _privateConstructorUsedError;
-  List<String> get country => throw _privateConstructorUsedError;
+  String get country => throw _privateConstructorUsedError;
 
   /// Serializes this DirectGeocoding to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $DirectGeocodingCopyWith<$Res> {
           DirectGeocoding value, $Res Function(DirectGeocoding) then) =
       _$DirectGeocodingCopyWithImpl<$Res, DirectGeocoding>;
   @useResult
-  $Res call({String name, double lat, double lon, List<String> country});
+  $Res call({String name, double lat, double lon, String country});
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$DirectGeocodingCopyWithImpl<$Res, $Val extends DirectGeocoding>
       country: null == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
     ) as $Val);
   }
 }
@@ -93,7 +93,7 @@ abstract class _$$DirectGeocodingImplCopyWith<$Res>
       __$$DirectGeocodingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, double lat, double lon, List<String> country});
+  $Res call({String name, double lat, double lon, String country});
 }
 
 /// @nodoc
@@ -128,9 +128,9 @@ class __$$DirectGeocodingImplCopyWithImpl<$Res>
           : lon // ignore: cast_nullable_to_non_nullable
               as double,
       country: null == country
-          ? _value._country
+          ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
     ));
   }
 }
@@ -142,8 +142,7 @@ class _$DirectGeocodingImpl implements _DirectGeocoding {
       {required this.name,
       required this.lat,
       required this.lon,
-      required final List<String> country})
-      : _country = country;
+      required this.country});
 
   factory _$DirectGeocodingImpl.fromJson(Map<String, dynamic> json) =>
       _$$DirectGeocodingImplFromJson(json);
@@ -154,13 +153,8 @@ class _$DirectGeocodingImpl implements _DirectGeocoding {
   final double lat;
   @override
   final double lon;
-  final List<String> _country;
   @override
-  List<String> get country {
-    if (_country is EqualUnmodifiableListView) return _country;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_country);
-  }
+  final String country;
 
   @override
   String toString() {
@@ -175,13 +169,12 @@ class _$DirectGeocodingImpl implements _DirectGeocoding {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.lat, lat) || other.lat == lat) &&
             (identical(other.lon, lon) || other.lon == lon) &&
-            const DeepCollectionEquality().equals(other._country, _country));
+            (identical(other.country, country) || other.country == country));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, lat, lon,
-      const DeepCollectionEquality().hash(_country));
+  int get hashCode => Object.hash(runtimeType, name, lat, lon, country);
 
   /// Create a copy of DirectGeocoding
   /// with the given fields replaced by the non-null parameter values.
@@ -205,7 +198,7 @@ abstract class _DirectGeocoding implements DirectGeocoding {
       {required final String name,
       required final double lat,
       required final double lon,
-      required final List<String> country}) = _$DirectGeocodingImpl;
+      required final String country}) = _$DirectGeocodingImpl;
 
   factory _DirectGeocoding.fromJson(Map<String, dynamic> json) =
       _$DirectGeocodingImpl.fromJson;
@@ -217,7 +210,7 @@ abstract class _DirectGeocoding implements DirectGeocoding {
   @override
   double get lon;
   @override
-  List<String> get country;
+  String get country;
 
   /// Create a copy of DirectGeocoding
   /// with the given fields replaced by the non-null parameter values.

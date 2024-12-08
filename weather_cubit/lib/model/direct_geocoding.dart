@@ -9,7 +9,7 @@ class DirectGeocoding with _$DirectGeocoding {
     required String name,
     required double lat,
     required double lon,
-    required List<String> country,
+    required String country,
   }) = _DirectGeocoding;
 
   factory DirectGeocoding.fromJson(Map<String, dynamic> json) =>
