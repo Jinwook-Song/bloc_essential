@@ -20,15 +20,11 @@ class TodoScreen extends StatelessWidget {
           create: (context) => ActiveTodoCountBloc(
             initialActiveTodoCount:
                 context.read<TodoListBloc>().state.todoList.length,
-            todoListBloc: BlocProvider.of<TodoListBloc>(context),
           ),
         ),
         BlocProvider(
           create: (context) => FilteredTodoListBloc(
             initialTodoList: context.read<TodoListBloc>().state.todoList,
-            todoFilterBloc: BlocProvider.of<TodoFilterBloc>(context),
-            todoSearchBloc: BlocProvider.of<TodoSearchBloc>(context),
-            todoListBloc: BlocProvider.of<TodoListBloc>(context),
           ),
         )
       ],

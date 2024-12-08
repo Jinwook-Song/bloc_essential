@@ -7,30 +7,93 @@ import 'package:todo_bloc_listener/view/widget/todo_item.dart';
 class TodoList extends StatelessWidget {
   const TodoList({super.key});
 
+  List<Todo> _setFilteredTodos({
+    required Filter filter,
+    required String searchTerm,
+    required List<Todo> todoList,
+  }) {
+    List<Todo> filteredTodoList;
+
+    switch (filter) {
+      case Filter.active:
+        filteredTodoList = todoList.where((todo) => !todo.completed).toList();
+        break;
+      case Filter.completed:
+        filteredTodoList = todoList.where((todo) => todo.completed).toList();
+      case Filter.all:
+      default:
+        filteredTodoList = todoList;
+        break;
+    }
+
+    if (searchTerm.isNotEmpty) {
+      filteredTodoList = filteredTodoList
+          .where((todo) => todo.desc.toLowerCase().contains(searchTerm))
+          .toList();
+    }
+
+    return filteredTodoList;
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Todo> todos =
         context.watch<FilteredTodoListBloc>().state.filteredTodoList;
 
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: todos.length,
-      separatorBuilder: (context, index) => const Divider(
-        color: Colors.grey,
-        height: 0,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<TodoFilterBloc, TodoFilterState>(
+          listener: (context, state) {
+            context.read<FilteredTodoListBloc>().add(CalcFilteredTodoListEvent(
+                    filteredTodoList: _setFilteredTodos(
+                  filter: state.filter,
+                  searchTerm: context.read<TodoSearchBloc>().state.term,
+                  todoList: context.read<TodoListBloc>().state.todoList,
+                )));
+          },
+        ),
+        BlocListener<TodoSearchBloc, TodoSearchState>(
+          listener: (context, state) {
+            context.read<FilteredTodoListBloc>().add(CalcFilteredTodoListEvent(
+                    filteredTodoList: _setFilteredTodos(
+                  filter: context.read<TodoFilterBloc>().state.filter,
+                  searchTerm: state.term,
+                  todoList: context.read<TodoListBloc>().state.todoList,
+                )));
+          },
+        ),
+        BlocListener<TodoListBloc, TodoListState>(
+          listener: (context, state) {
+            context.read<FilteredTodoListBloc>().add(CalcFilteredTodoListEvent(
+                    filteredTodoList: _setFilteredTodos(
+                  filter: context.read<TodoFilterBloc>().state.filter,
+                  searchTerm: context.read<TodoSearchBloc>().state.term,
+                  todoList: state.todoList,
+                )));
+          },
+        ),
+      ],
+      child: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: todos.length,
+        separatorBuilder: (context, index) => const Divider(
+          color: Colors.grey,
+          height: 0,
+        ),
+        itemBuilder: (context, index) {
+          final Todo todo = todos[index];
+          return Dismissible(
+              key: ValueKey(todo.id),
+              onDismissed: (_) => context
+                  .read<TodoListBloc>()
+                  .add(DeleteTodoEvent(id: todo.id)),
+              confirmDismiss: (_) => _confirmDismissDialog(context),
+              background: const DissmissBackground(left: true),
+              secondaryBackground: const DissmissBackground(left: false),
+              child: TodoItem(todo));
+        },
       ),
-      itemBuilder: (context, index) {
-        final Todo todo = todos[index];
-        return Dismissible(
-            key: ValueKey(todo.id),
-            onDismissed: (_) =>
-                context.read<TodoListBloc>().add(DeleteTodoEvent(id: todo.id)),
-            confirmDismiss: (_) => _confirmDismissDialog(context),
-            background: const DissmissBackground(left: true),
-            secondaryBackground: const DissmissBackground(left: false),
-            child: TodoItem(todo));
-      },
     );
   }
 
