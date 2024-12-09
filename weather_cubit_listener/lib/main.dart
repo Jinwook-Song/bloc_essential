@@ -36,27 +36,30 @@ class MyApp extends StatelessWidget {
               create: (context) => TempUnitCubit(),
             ),
             BlocProvider(
-              create: (context) => ThemeCubit(
-                context.read<WeatherCubit>(),
-              ),
+              create: (context) => ThemeCubit(),
             ),
           ],
-          child: BlocBuilder<ThemeCubit, ThemeState>(
-            builder: (context, state) {
-              return MaterialApp(
-                title: 'Weather',
-                themeMode: state.appTheme == AppTheme.light
-                    ? ThemeMode.light
-                    : ThemeMode.dark,
-                theme: ThemeData(
-                  colorScheme:
-                      ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-                  useMaterial3: true,
-                ),
-                darkTheme: ThemeData.dark(),
-                home: HomeScreen(),
-              );
+          child: BlocListener<WeatherCubit, WeatherState>(
+            listener: (context, state) {
+              context.read<ThemeCubit>().setTheme(state.weather.main.temp);
             },
+            child: BlocBuilder<ThemeCubit, ThemeState>(
+              builder: (context, state) {
+                return MaterialApp(
+                  title: 'Weather',
+                  themeMode: state.appTheme == AppTheme.light
+                      ? ThemeMode.light
+                      : ThemeMode.dark,
+                  theme: ThemeData(
+                    colorScheme:
+                        ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                    useMaterial3: true,
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  home: HomeScreen(),
+                );
+              },
+            ),
           ),
         ),
       ),
