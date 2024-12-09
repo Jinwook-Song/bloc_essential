@@ -41,12 +41,24 @@ class WeatherProps with _$WeatherProps {
 
 @freezed
 class Temp with _$Temp {
+  const Temp._();
+
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Temp({
     required double temp,
     required double tempMin,
     required double tempMax,
   }) = _Temp;
+
+  String get tempCelcius => '${temp.toStringAsFixed(2)} ℃';
+  String get tempMinCelcius => '${tempMin.toStringAsFixed(2)} ℃';
+  String get tempMaxCelcius => '${tempMax.toStringAsFixed(2)} ℃';
+
+  String get tempFahrenheit => '${(temp * (9 / 5) + 32).toStringAsFixed(2)} ℉';
+  String get tempMinFahrenheit =>
+      '${(tempMin * (9 / 5) + 32).toStringAsFixed(2)} ℉';
+  String get tempMaxFahrenheit =>
+      '${(tempMax * (9 / 5) + 32).toStringAsFixed(2)} ℉';
 
   factory Temp.fromJson(Map<String, dynamic> json) => _$TempFromJson(json);
 }

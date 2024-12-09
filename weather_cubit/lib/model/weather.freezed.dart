@@ -549,9 +549,10 @@ class __$$TempImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$TempImpl implements _Temp {
+class _$TempImpl extends _Temp {
   const _$TempImpl(
-      {required this.temp, required this.tempMin, required this.tempMax});
+      {required this.temp, required this.tempMin, required this.tempMax})
+      : super._();
 
   factory _$TempImpl.fromJson(Map<String, dynamic> json) =>
       _$$TempImplFromJson(json);
@@ -598,11 +599,12 @@ class _$TempImpl implements _Temp {
   }
 }
 
-abstract class _Temp implements Temp {
+abstract class _Temp extends Temp {
   const factory _Temp(
       {required final double temp,
       required final double tempMin,
       required final double tempMax}) = _$TempImpl;
+  const _Temp._() : super._();
 
   factory _Temp.fromJson(Map<String, dynamic> json) = _$TempImpl.fromJson;
 
