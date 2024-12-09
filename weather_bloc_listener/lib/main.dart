@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_bloc_listener/bloc/bloc.dart';
+import 'package:weather_bloc_listener/constant/constant.dart';
 import 'package:weather_bloc_listener/repository/weather.dart';
 import 'package:weather_bloc_listener/service/weather_api_service.dart';
 import 'package:weather_bloc_listener/view/view.dart';
@@ -36,27 +37,34 @@ class MyApp extends StatelessWidget {
               create: (context) => TempUnitBloc(),
             ),
             BlocProvider(
-              create: (context) => ThemeBloc(
-                context.read<WeatherBloc>(),
-              ),
+              create: (context) => ThemeBloc(),
             ),
           ],
-          child: BlocBuilder<ThemeBloc, ThemeState>(
-            builder: (context, state) {
-              return MaterialApp(
-                title: 'Weather',
-                themeMode: state.appTheme == AppTheme.light
-                    ? ThemeMode.light
-                    : ThemeMode.dark,
-                theme: ThemeData(
-                  colorScheme:
-                      ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-                  useMaterial3: true,
-                ),
-                darkTheme: ThemeData.dark(),
-                home: HomeScreen(),
-              );
+          child: BlocListener<WeatherBloc, WeatherState>(
+            listener: (context, state) {
+              if (state.weather.main.temp > kIsWarm) {
+                context.read<ThemeBloc>().add(SetThemeEvent(AppTheme.light));
+              } else {
+                context.read<ThemeBloc>().add(SetThemeEvent(AppTheme.dark));
+              }
             },
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                return MaterialApp(
+                  title: 'Weather',
+                  themeMode: state.appTheme == AppTheme.light
+                      ? ThemeMode.light
+                      : ThemeMode.dark,
+                  theme: ThemeData(
+                    colorScheme:
+                        ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                    useMaterial3: true,
+                  ),
+                  darkTheme: ThemeData.dark(),
+                  home: HomeScreen(),
+                );
+              },
+            ),
           ),
         ),
       ),

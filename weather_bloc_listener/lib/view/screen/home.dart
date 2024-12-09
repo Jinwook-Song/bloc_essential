@@ -86,85 +86,90 @@ class _HomeScreenState extends State<HomeScreen> {
             case WeatherStatus.loaded:
               return BlocBuilder<TempUnitBloc, TempUnitState>(
                 builder: (context, state) {
-                  return ListView(
-                    shrinkWrap: true,
-                    children: [
-                      Gap(MediaQuery.of(context).size.height / 6),
-                      Text(
-                        weather.name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
-                      ),
-                      Gap(10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            TimeOfDay.fromDateTime(weather.updatedAt)
-                                .format(context),
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          Gap(10),
-                          Text(
-                            "(${weather.country})",
-                            style: TextStyle(fontSize: 18),
-                          )
-                        ],
-                      ),
-                      Gap(60),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            state.tempUnit == TempUnit.celsius
-                                ? weather.main.tempCelcius
-                                : weather.main.tempFahrenheit,
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                  return RefreshIndicator.adaptive(
+                    onRefresh: () async {
+                      context.read<WeatherBloc>().add(GetWeatherEvent(_city!));
+                    },
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        Gap(MediaQuery.of(context).size.height / 6),
+                        Text(
+                          weather.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 40, fontWeight: FontWeight.bold),
+                        ),
+                        Gap(10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              TimeOfDay.fromDateTime(weather.updatedAt)
+                                  .format(context),
+                              style: TextStyle(fontSize: 18),
                             ),
-                          ),
-                          Gap(20),
-                          Column(
-                            children: [
-                              Text(
-                                state.tempUnit == TempUnit.celsius
-                                    ? weather.main.tempMaxCelcius
-                                    : weather.main.tempMaxFahrenheit,
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Gap(10),
-                              Text(
-                                state.tempUnit == TempUnit.celsius
-                                    ? weather.main.tempMinCelcius
-                                    : weather.main.tempMinFahrenheit,
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Gap(40),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Spacer(),
-                          WeatherIcon(weatherProps.icon),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              weatherProps.description.titleCase,
-                              textAlign: TextAlign.center,
+                            Gap(10),
+                            Text(
+                              "(${weather.country})",
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ],
+                        ),
+                        Gap(60),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              state.tempUnit == TempUnit.celsius
+                                  ? weather.main.tempCelcius
+                                  : weather.main.tempFahrenheit,
                               style: TextStyle(
-                                fontSize: 24,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                          Spacer(),
-                        ],
-                      )
-                    ],
+                            Gap(20),
+                            Column(
+                              children: [
+                                Text(
+                                  state.tempUnit == TempUnit.celsius
+                                      ? weather.main.tempMaxCelcius
+                                      : weather.main.tempMaxFahrenheit,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Gap(10),
+                                Text(
+                                  state.tempUnit == TempUnit.celsius
+                                      ? weather.main.tempMinCelcius
+                                      : weather.main.tempMinFahrenheit,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Gap(40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Spacer(),
+                            WeatherIcon(weatherProps.icon),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                weatherProps.description.titleCase,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                          ],
+                        )
+                      ],
+                    ),
                   );
                 },
               );
