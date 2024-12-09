@@ -3,43 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:weather_cubit/cubit/cubit.dart';
 import 'package:weather_cubit/model/model.dart';
-import 'package:weather_cubit/repository/weather.dart';
-import 'package:weather_cubit/service/weather_api_service.dart';
-import 'package:http/http.dart' as http;
 import 'package:weather_cubit/view/view.dart';
 import 'package:weather_cubit/view/widget/weather_icon.dart';
 import 'package:recase/recase.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider<WeatherApiService>(
-      create: (context) => WeatherApiServiceImpl(http.Client()),
-      child: RepositoryProvider<WeatherRepository>(
-        create: (context) => WeatherRepositoryImpl(
-          context.read<WeatherApiService>(),
-        ),
-        child: BlocProvider(
-          create: (context) => WeatherCubit(
-            context.read<WeatherRepository>(),
-          ),
-          child: const HomeScreenView(),
-        ),
-      ),
-    );
-  }
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class HomeScreenView extends StatefulWidget {
-  const HomeScreenView({super.key});
-
-  @override
-  State<HomeScreenView> createState() => _HomeScreenViewState();
-}
-
-class _HomeScreenViewState extends State<HomeScreenView> {
+class _HomeScreenState extends State<HomeScreen> {
   String? _city;
 
   @override
