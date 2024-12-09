@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "972278885362",
+    "project_id": "fb-auth-bloc-jw",
+    "storage_bucket": "fb-auth-bloc-jw.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972278885362:android:dfe2724fa4d9ea9423996b",
+        "android_client_info": {
+          "package_name": "com.example.fb_auth_bloc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZmfGgG93jDMpptkXr63fnzieiaSRfwrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972278885362:android:9ddd9f027f812aac23996b",
+        "android_client_info": {
+          "package_name": "com.fb_auth_bloc.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZmfGgG93jDMpptkXr63fnzieiaSRfwrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
