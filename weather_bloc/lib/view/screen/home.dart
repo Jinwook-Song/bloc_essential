@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:weather_bloc/cubit/cubit.dart';
+import 'package:weather_bloc/bloc/bloc.dart';
 import 'package:weather_bloc/model/model.dart';
 import 'package:weather_bloc/view/view.dart';
 import 'package:weather_bloc/view/widget/weather_icon.dart';
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
 
               if (_city == null) return;
-              context.read<WeatherCubit>().getWeather(_city!);
+              context.read<WeatherBloc>().add(GetWeatherEvent(_city!));
             },
             icon: Icon(Icons.search),
           ),
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: BlocConsumer<WeatherCubit, WeatherState>(
+      body: BlocConsumer<WeatherBloc, WeatherState>(
         listener: (context, state) {
           if (state.status == WeatherStatus.error) {
             errorDialog(context, state.error.message);
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('Error: ${error.message}'),
               );
             case WeatherStatus.loaded:
-              return BlocBuilder<TempUnitCubit, TempUnitState>(
+              return BlocBuilder<TempUnitBloc, TempUnitState>(
                 builder: (context, state) {
                   return ListView(
                     shrinkWrap: true,

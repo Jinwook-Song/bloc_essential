@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_bloc/cubit/cubit.dart';
+import 'package:weather_bloc/bloc/bloc.dart';
 import 'package:weather_bloc/repository/weather.dart';
 import 'package:weather_bloc/service/weather_api_service.dart';
 import 'package:weather_bloc/view/view.dart';
@@ -28,20 +28,20 @@ class MyApp extends StatelessWidget {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => WeatherCubit(
+              create: (context) => WeatherBloc(
                 context.read<WeatherRepository>(),
               ),
             ),
             BlocProvider(
-              create: (context) => TempUnitCubit(),
+              create: (context) => TempUnitBloc(),
             ),
             BlocProvider(
-              create: (context) => ThemeCubit(
-                context.read<WeatherCubit>(),
+              create: (context) => ThemeBloc(
+                context.read<WeatherBloc>(),
               ),
             ),
           ],
-          child: BlocBuilder<ThemeCubit, ThemeState>(
+          child: BlocBuilder<ThemeBloc, ThemeState>(
             builder: (context, state) {
               return MaterialApp(
                 title: 'Weather',
