@@ -18,10 +18,11 @@ class SplashScreen extends StatelessWidget {
             );
             break;
           case AuthStatus.unauthenticated:
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              Routes.signin.path,
-              (route) => false,
-            );
+            Navigator.of(context).pushNamed(Routes.signin.path);
+            // Navigator.of(context).pushNamedAndRemoveUntil(
+            //   Routes.signin.path,
+            //   (route) => false,
+            // );
             break;
           default:
             break;
