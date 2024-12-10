@@ -1,31 +1,31 @@
-class RouteMoel {
+class RouteModel {
   final String path;
   final String name;
 
-  const RouteMoel({
+  const RouteModel({
     required this.path,
     required this.name,
   });
 }
 
 class Routes {
-  static const RouteMoel splash = RouteMoel(
+  static const RouteModel splash = RouteModel(
     path: '/splash',
     name: 'Splash',
   );
-  static const RouteMoel home = RouteMoel(
+  static const RouteModel home = RouteModel(
     path: '/',
     name: 'Home',
   );
-  static const RouteMoel signin = RouteMoel(
+  static const RouteModel signin = RouteModel(
     path: '/signin',
     name: 'Signin',
   );
-  static const RouteMoel signup = RouteMoel(
+  static const RouteModel signup = RouteModel(
     path: '/signup',
     name: 'Signup',
   );
-  static const RouteMoel profile = RouteMoel(
+  static const RouteModel profile = RouteModel(
     path: '/profile',
     name: 'Profile',
   );

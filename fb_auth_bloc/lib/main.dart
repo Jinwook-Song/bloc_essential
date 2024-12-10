@@ -1,9 +1,12 @@
+import 'package:fb_auth_bloc/bloc/auth/auth.dart';
 import 'package:fb_auth_bloc/constant/constant.dart';
 import 'package:fb_auth_bloc/firebase_options.dart';
-import 'package:fb_auth_bloc/view/screen/splash.dart';
+import 'package:fb_auth_bloc/repository/auth.dart';
 import 'package:fb_auth_bloc/view/view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,18 +22,46 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (context) => AuthRepositoryImpl(
+            FirebaseAuth.instance,
+          ),
+        )
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(
+              context.read<AuthRepository>(),
+            ),
+          )
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          initialRoute: Routes.splash.path,
+          onGenerateRoute: (settings) {
+            switch (settings.name) {
+              case '/splash':
+                return MaterialPageRoute(builder: (_) => SplashScreen());
+              case '/signup':
+                return MaterialPageRoute(builder: (_) => SignupScreen());
+              case '/signin':
+                return MaterialPageRoute(builder: (_) => SigninScreen());
+              case '/':
+                return MaterialPageRoute(builder: (_) => HomeScreen());
+              case '/profile':
+                return MaterialPageRoute(builder: (_) => ProfileScreen());
+            }
+            return null;
+          },
+        ),
       ),
-      home: SplashScreen(),
-      routes: {
-        Routes.signup.path: (context) => SignupScreen(),
-        Routes.signin.path: (context) => SigninScreen(),
-        Routes.home.path: (context) => HomeScreen(),
-      },
     );
   }
 }

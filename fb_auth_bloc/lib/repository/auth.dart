@@ -1,10 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_auth_bloc/constant/constant.dart';
 import 'package:fb_auth_bloc/model/custom_error.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:fb_auth_bloc/model/model.dart';
 
 abstract interface class AuthRepository {
+  Stream<fbAuth.User?> get user;
+
   Future<void> signup({
     required String name,
     required String email,
@@ -24,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   AuthRepositoryImpl(this._firebaseAuth);
 
+  @override
   Stream<fbAuth.User?> get user => _firebaseAuth.userChanges();
 
   @override
