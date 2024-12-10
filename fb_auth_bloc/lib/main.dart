@@ -42,6 +42,11 @@ class MyApp extends StatelessWidget {
               context.read<AuthRepository>(),
             ),
           ),
+          BlocProvider<SignupBloc>(
+            create: (context) => SignupBloc(
+              context.read<AuthRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
