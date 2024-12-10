@@ -1,4 +1,6 @@
+import 'package:fb_auth_bloc/constant/constant.dart';
 import 'package:fb_auth_bloc/firebase_options.dart';
+import 'package:fb_auth_bloc/view/screen/splash.dart';
 import 'package:fb_auth_bloc/view/view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: SplashScreen(),
+      routes: {
+        Routes.signup.path: (context) => SignupScreen(),
+        Routes.signin.path: (context) => SigninScreen(),
+        Routes.home.path: (context) => HomeScreen(),
+      },
     );
   }
 }
