@@ -1,4 +1,4 @@
-import 'package:fb_auth_bloc/bloc/auth/auth.dart';
+import 'package:fb_auth_bloc/bloc/bloc.dart';
 import 'package:fb_auth_bloc/constant/constant.dart';
 import 'package:fb_auth_bloc/firebase_options.dart';
 import 'package:fb_auth_bloc/repository/auth.dart';
@@ -36,7 +36,12 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthBloc(
               context.read<AuthRepository>(),
             ),
-          )
+          ),
+          BlocProvider<SigninBloc>(
+            create: (context) => SigninBloc(
+              context.read<AuthRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

@@ -5,7 +5,6 @@ part 'auth_state.freezed.dart';
 
 @freezed
 class AuthState with _$AuthState {
-  @JsonSerializable(explicitToJson: true)
   const factory AuthState({
     required AuthStatus authStatus,
     required fbAuth.User? user,

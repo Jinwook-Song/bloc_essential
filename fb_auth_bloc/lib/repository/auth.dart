@@ -1,5 +1,4 @@
 import 'package:fb_auth_bloc/constant/constant.dart';
-import 'package:fb_auth_bloc/model/custom_error.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:fb_auth_bloc/model/model.dart';
 
