@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _load(Duration _) {
     final uid = context.read<AuthBloc>().state.user!.uid;
-    context.read<ProfileBloc>().add(GetProfileEvent('uid'));
+    context.read<ProfileBloc>().add(GetProfileEvent(uid));
   }
 
   @override

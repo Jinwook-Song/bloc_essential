@@ -66,21 +66,15 @@ class MyApp extends StatelessWidget {
             splashFactory: NoSplash.splashFactory,
           ),
           initialRoute: Routes.splash.path,
-          onGenerateRoute: (settings) {
-            switch (settings.name) {
-              case '/splash':
-                return MaterialPageRoute(builder: (_) => SplashScreen());
-              case '/signup':
-                return MaterialPageRoute(builder: (_) => SignupScreen());
-              case '/signin':
-                return MaterialPageRoute(builder: (_) => SigninScreen());
-              case '/':
-                return MaterialPageRoute(builder: (_) => HomeScreen());
-              case '/profile':
-                return MaterialPageRoute(builder: (_) => ProfileScreen());
-            }
-            return null;
+          routes: {
+            Routes.splash.path: (context) => SplashScreen(),
+            Routes.signin.path: (context) => SigninScreen(),
+            Routes.signup.path: (context) => SignupScreen(),
+            Routes.home.path: (context) => HomeScreen(),
+            Routes.profile.path: (context) => ProfileScreen(),
           },
+
+          // },
         ),
       ),
     );
