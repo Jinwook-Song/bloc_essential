@@ -1,7 +1,7 @@
 import 'package:fb_auth_bloc/bloc/bloc.dart';
 import 'package:fb_auth_bloc/constant/constant.dart';
 import 'package:fb_auth_bloc/firebase_options.dart';
-import 'package:fb_auth_bloc/repository/auth.dart';
+import 'package:fb_auth_bloc/repository/repository.dart';
 import 'package:fb_auth_bloc/view/view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +28,10 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthRepositoryImpl(
             FirebaseAuth.instance,
           ),
-        )
+        ),
+        RepositoryProvider<ProfileRepository>(
+          create: (context) => ProfileRepositoryImpl(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -47,6 +50,11 @@ class MyApp extends StatelessWidget {
               context.read<AuthRepository>(),
             ),
           ),
+          BlocProvider<ProfileBloc>(
+            create: (context) => ProfileBloc(
+              context.read<ProfileRepository>(),
+            ),
+          )
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
